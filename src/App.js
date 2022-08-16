@@ -25,20 +25,28 @@ const App = () => {
     axios.post("http://127.0.0.1:5000/", ...todo);
   }; */
 
-  const toggleComplete = async (id) => {
-    await axios.put(`http://127.0.0.1:5000/`, ...todos);
-    setTodos(
+  const toggleComplete = (id) => {
+    const newTodos = [...todos];
+    newTodos.map((todo) => {
+      if (todo._id === id) {
+        todo.title = todo.title;
+        todo.checked = !todo.checked;
+      }
+      axios.post(`http://127.0.0.1:5000/` + id, ...todo);
+    });
+    return setTodos(newTodos);
+  };
+  /*setTodos(
       todos.map((todo) => {
         if (todo._id === id) {
           return {
-            ...todo,
+            title: todo.title,
             checked: !todo.checked,
           };
         }
         return todo;
       })
-    );
-  };
+    );*/
 
   const removeTodo = async (id) => {
     await axios.delete(`http://127.0.0.1:5000/` + id);
